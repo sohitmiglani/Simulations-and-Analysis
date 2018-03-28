@@ -1,7 +1,8 @@
+# This algorithm simulates a population distribution of patients suffering from Alzheimer's disease. 
+# It simulates how their mental health is affected by a quasi experimental intervention of listening to music everyday. 
+# The positive effects of music, and effects of confdounding factors are mathematically adjusted in the health of the patients. 
 
-# coding: utf-8
-
-# In[18]:
+# It also visualizes how the population's mental health improves, incorporating all the positive and negative random effects. 
 
 import random
 import numpy as np
