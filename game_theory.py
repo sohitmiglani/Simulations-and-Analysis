@@ -1,0 +1,81 @@
+
+# coding: utf-8
+
+# In[2]:
+
+# This algorithm simulates the happiness in a population distribution of GMO Stores. 
+# Each store has a certain threshold which is equal to the number of stores that should be selling GMO's in order for the store to be active. 
+# Eg. Store A has a threshold of 5. So if initially 5 stores are selling GMO's, then Store A will sell GMO's. 
+# It also visualizes the variation in the number of stores selling GMO's. 
+
+# This is a very practical application of how randomized distribution of thresholds across a social network affects an entire industry. 
+
+import matplotlib.pyplot as plt
+import random
+import matplotlib.pyplot as plt
+import random
+import numpy as np
+
+weeks = int(raw_input("What is the number of weeks for the simulation?")) # Asking for how many weeks must the simulation run. 
+
+# The line below asks for how many stores are initially selling GMO Products. 
+number_of_stores_selling = int(raw_input("What is the number of stores selling GMO Products last week?"))
+
+#This is an empty set that we'll use to track the number of stores selling GMO's every week over the time. 
+weekly_happy_stores = []  
+thresholds = []       #This is a empty set that we'll use to construct the thresholds for 500 stores 
+
+#This asks for which kind of distribution does the person want the thresholds to have. 
+x = int(raw_input("What kind of distribution do you want for the thresholds? Enter 1 for Uniform, 2 for Normal, 3 For Random"))
+
+def uniform_dist():  #This function selects a random number and creates a uniform distribution with that.  
+    z = int(500*random.random()) + 1
+    a = 0 
+    while a < 500:  # This function will make 500 copies of that same number in the set to make a uniform distribution. 
+        thresholds.append(z)
+        a +=1
+    return thresholds
+
+def normal_dist(): #This will make a normal distribution of mean 250 and standard deviation 100.  
+    thresholds = np.random.normal(250,100,(500,)) # This outputs the normal distribution of 500 elements. 
+    return thresholds
+        
+def random_dist(): # This will make a random distribution of 500 elements, each element being different.  
+    a = 0 
+    while a < 500:
+        b = int(500*random.random()) + 1 #This line outputs one random number from 1 to 500. 
+        thresholds.append(b)  # we add it to the thresholds set. We do this 500 times. 
+        a +=1
+    return thresholds
+
+a = 0
+while a < weeks:  #This loop basically carries out the activity. Every time we go through the loop, one week completes. 
+    if x ==1:     # For each week, the set of thresholds will be a new one. 
+        thresholds = uniform_dist()  # This function has been integrated into the cycle to make new thresholds eahc week. 
+    if x ==2:                       
+        thresholds = normal_dist()  # Makes a normal distribution 
+    if x ==3: 
+        thresholds = random_dist()  # Makes a random distribution 
+    
+    weekly_happy_stores.append(number_of_stores_selling) #We track the number of stores selling GMO's for that week in our set. 
+    
+    # We set this new variable which we'll use to track how many stores were selling GMO's (they were happy) in that week. 
+    number_of_happy_stores = 0  
+    for e in thresholds: 
+        # this loop checks each threshold in the threshold sets and checks if threshold is exceeded. 
+        if number_of_stores_selling > e: 
+            number_of_happy_stores += 1  # this variable tracks how many stores' thresholds have been exceeded. 
+        #this variable now becomes the number of stores that will now sell GMO next week, since their threshold is exceeded. 
+    number_of_stores_selling = number_of_happy_stores  
+    #This variable "a" is the number of weeks. It stops the while loop when the desired number of weeks is reached.
+    a += 1  
+    thresholds = []
+    
+
+# The set "weekly_happy_stores" is the distribution of number of stores that sold GMO every week"
+plt.plot(weekly_happy_stores)  # We plot it as a line graph. Each element corresponds to each week. 
+plt.title("Distribution of Stores that sold GMO's weekly") # The title of the graph. 
+plt.xlabel("Week") #The x-label which represents each week.  
+plt.ylabel("Number of Stores selling GMO's") # The number of stores selling GMO each week 
+plt.show() 
+
